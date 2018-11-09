@@ -1,0 +1,8 @@
+# POST /member/mistake/detail.htm HTTP/1.1
+# User-Agent: kdtk/4.3.1 (com.yunti.kdtk; build:63 Android 23) okhttp/3.5.0
+# Content-Type: application/x-www-form-urlencoded
+# Content-Length: 34
+# Host: api4.koudaitiku.com
+# Connection: Keep-Alive
+# Accept-Encoding: gzip
+# Cookie: _kdsess=shjbun6avlukkhpyy5cplxy5qh4lhulaij2srmcnvbpsvqt2id264gcbtxyne6zdpw44rvnxohj7q
