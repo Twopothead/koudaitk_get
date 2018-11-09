@@ -157,6 +157,20 @@ def path_things(path):
     pathlib.Path(path).mkdir(parents=True, exist_ok=True) 
     return
 
+def problem_detail_html_save_to_path(problems_detail_json,detail_base_path,int_id):
+    # print(problems_detail_json["data"]["description"])
+    # print(problems_detail_json["data"]["solveGuide"])
+    # 112_政治权利与义务 里　111111.txt有个服务器异常 {"msg": "服务器异常","code": "500"}
+    if(problems_detail_json["code"]=="200"):
+        with open(detail_base_path+str(int_id)+"_"+"description"+".htm", 'w') as f1:
+            f1.write(problems_detail_json["data"]["description"])
+        with open(detail_base_path+str(int_id)+"_"+"solveGuide"+".htm", 'w') as f2:
+            f2.write(problems_detail_json["data"]["solveGuide"])
+    else:
+        print(problems_detail_json) # 服务器异常
+    # grep -o "\"http.*\"" 5238_description.htm > 题目图片.txt
+    return
+
 def save_problems_detail(subject_name):
     path_problems_detail=current_dir+"/problems_detail"
     path_things(path_problems_detail+"/politics")
@@ -180,8 +194,12 @@ def save_problems_detail(subject_name):
         for it in examItems:
             print(it['id'],end=" ")
             file_problem_detail = path_point_name+str(it['id'])+".txt"
-            json_save_to_path(get_exam_problem_details_by_Id(int(it['id'])),file_problem_detail)
-            get_exam_problem_details_by_Id(it['id']) # answerType: 单选0 多选1 综合题4
+            problem_detail_text = get_exam_problem_details_by_Id(int(it['id']))
+            json_save_to_path(problem_detail_text,file_problem_detail)
+            problems_detail_json = json.loads(problem_detail_text)
+            problem_detail_html_save_to_path(problems_detail_json,path_point_name,it['id'])
+            # 这里把题干和解答都保存为htm页面
+            # get_exam_problem_details_by_Id(it['id']) # answerType: 单选0 多选1 综合题4
         print("")
     return
 
@@ -189,7 +207,7 @@ login()
 get_subject_id()
 get_mistaked_problems_lists_and_save() #获得错题们的id
 
-# save_problems_detail('政治')
+save_problems_detail('政治')
 save_problems_detail('计算机联考')
 
    
